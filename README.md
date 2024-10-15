@@ -18,8 +18,7 @@
 ## Build
 Создайте переменные окружения для приложений
 ```bash
-cp .env.client.example client/.env
-cp .env.server.example server/.env
+cp .env.example .env
 ```
 
 Каждое приложение можно сбилдить и запустить при помощи Makefile'ов
@@ -55,6 +54,7 @@ http://${your_host}:${CLIENT_PORT}/
 |:----------------------------|:-----------------------|:-------------------------------------------|
 | CLIENT_PORT                 | 3004                   | Client app port                            |
 | SERVER_PORT                 | 3003                   | Server app port                            |
+| SERVER_HOST                 | localhost              | Server app host                            |
 | POSTGRES_HOST               | localhost              | Postgres host                              |
 | POSTGRES_PORT               | 5742                   | Postgres port                              |
 | POSTGRES_DB_NAME            | core                   | Postgres database name                     |
