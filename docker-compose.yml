@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  client:
+    build: 
+      context: .
+      dockerfile: ./client/Dockerfile
+    depends_on:
+      - server
+    environment:
+      - SERVER_HOST=server
+    restart: unless-stopped
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+
+  server:
+    build: 
+      context: .
+      dockerfile: ./server/Dockerfile
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST=postgres
+    ports:
+      - "${PORT}:${PORT}"
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PWD}
+    command: -p ${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - pg:/var/lib/postgresql/data
+
+
+volumes:
+  pg:
+    driver: local
